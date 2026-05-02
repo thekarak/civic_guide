@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CivicGuide — India Election Education Assistant</title>
+  <link rel="stylesheet" href="css/main.css">
+  <link rel="stylesheet" href="css/components.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+  <div class="animated-bg"></div>
+  <canvas id="particles-canvas"></canvas>
+  <canvas id="confetti-canvas"></canvas>
+
+  <div id="app">
+    <!-- Header -->
+    <header id="header">
+      <div class="header-logo">
+        <div class="logo-icon">🗳️</div>
+        <div class="logo-text">Civic<span>Guide</span></div>
+      </div>
+      <div class="header-divider"></div>
+      <div class="header-subtitle">Bharat ka Apna Election Shikshak</div>
+      <div class="header-center">
+        <div class="header-status">
+          <div class="status-dot"></div>
+          <span>Online & Ready</span>
+        </div>
+      </div>
+      <div class="header-actions">
+        <div class="mode-toggle" id="mode-toggle" onclick="toggleExpertMode()" title="Toggle First Timer / Expert Mode">
+          <div class="mode-slider"></div>
+          <span class="mode-label first-timer active">First Timer</span>
+          <span class="mode-label expert">Expert</span>
+        </div>
+        <button class="icon-btn" title="Toggle Theme" onclick="toggleTheme()" aria-label="Toggle Light/Dark Mode"><i class="fas fa-moon"></i></button>
+        <button class="icon-btn hamburger-btn" onclick="document.getElementById('sidebar').classList.add('open')" aria-label="Open Sidebar Menu"><i class="fas fa-bars"></i></button>
+      </div>
+      <div class="tricolor-strip"></div>
+    </header>
+
+    <!-- Sidebar (Left) -->
+    <aside id="sidebar">
+      <div class="sidebar-header">
+        <div class="sidebar-search">
+          <i class="fas fa-search"></i>
+          <input type="text" placeholder="Search topics...">
+        </div>
+      </div>
+      <nav class="sidebar-nav">
+        <div class="nav-section">
+          <div class="nav-section-title">A. Foundations</div>
+          <div class="nav-item active" onclick="processInput('1')"><div class="nav-item-icon">🏛️</div><span>Constitution & Voting Right</span><div class="nav-item-num">[1]</div></div>
+          <div class="nav-item" onclick="processInput('2')"><div class="nav-item-icon">🗳️</div><span>Types of Elections</span><div class="nav-item-num">[2]</div></div>
+          <div class="nav-item" onclick="processInput('3')"><div class="nav-item-icon">👤</div><span>Voter Eligibility</span><div class="nav-item-num">[3]</div></div>
+          <div class="nav-item" onclick="processInput('4')"><div class="nav-item-icon">📋</div><span>How to Register</span><div class="nav-item-num">[4]</div></div>
+        </div>
+        <div class="nav-section">
+          <div class="nav-section-title">D. Technology</div>
+          <div class="nav-item" onclick="processInput('19')"><div class="nav-item-icon">🖥️</div><span>EVM Detail</span><div class="nav-item-num">[19]</div></div>
+        </div>
+        <div class="nav-section">
+          <div class="nav-section-title">E. Laws & Rules</div>
+          <div class="nav-item" onclick="processInput('23')"><div class="nav-item-icon">📜</div><span>Model Code of Conduct</span><div class="nav-item-num">[23]</div></div>
+        </div>
+        <div class="nav-section">
+          <div class="nav-section-title">G. Quiz Mode</div>
+          <div class="nav-item" onclick="processInput('34')"><div class="nav-item-icon">🏆</div><span>Championship Quiz</span><div class="nav-item-num">[34]</div></div>
+        </div>
+      </nav>
+      <div class="sidebar-footer">
+        <div class="voter-helpline">
+          <div class="voter-helpline-num">1950</div>
+          <div class="voter-helpline-label">National Voter Helpline</div>
+        </div>
+      </div>
+    </aside>
+    <div id="sidebar-overlay" onclick="document.getElementById('sidebar').classList.remove('open')"></div>
+
+    <!-- Main Chat Area -->
+    <main id="chat-container">
+      <div id="chat-messages">
+        <!-- Messages go here -->
+      </div>
+      <div id="quick-replies">
+        <div class="chip action-chip glow-saffron">Am I Ready to Vote? 📋</div>
+        <div class="chip">What is EVM?</div>
+        <div class="chip">Lost my Voter ID</div>
+        <div class="chip">Start Quiz 🏆</div>
+      </div>
+      <div id="input-bar">
+        <textarea id="user-input" placeholder="Type a number [1-36] or ask a question..." rows="1" aria-label="Chat input field"></textarea>
+        <button id="send-btn" aria-label="Send message"><i class="fas fa-paper-plane"></i></button>
+      </div>
+    </main>
+
+    <!-- Right Bar -->
+    <aside id="rightbar">
+      <div class="rightbar-section">
+        <div class="rightbar-title">Did You Know?</div>
+        <div class="fact-ticker">
+          <div class="fact-item" onclick="processInput('Tell me a fact about the electorate')" role="button" tabindex="0">India has the world's largest electorate — 96.8 crore registered voters!</div>
+          <div class="fact-item" onclick="processInput('When were EVMs first used?')" role="button" tabindex="0">In 1982, EVMs were used for the first time in Parur constituency, Kerala.</div>
+        </div>
+      </div>
+      <div class="rightbar-section">
+        <div class="rightbar-title">Translate</div>
+        <div id="google_translate_element"></div>
+      </div>
+      <div class="rightbar-section">
+        <div class="rightbar-title">Live Countdown</div>
+        <div class="countdown-card glow-saffron">
+          <div class="countdown-title" id="countdown-title">Next General Election</div>
+          <div class="countdown-timer" id="live-countdown">
+            <div class="time-box"><span id="cd-days">--</span><small>Days</small></div><span class="colon">:</span>
+            <div class="time-box"><span id="cd-hours">--</span><small>Hrs</small></div><span class="colon">:</span>
+            <div class="time-box"><span id="cd-mins">--</span><small>Min</small></div><span class="colon">:</span>
+            <div class="time-box"><span id="cd-secs">--</span><small>Sec</small></div>
+          </div>
+        </div>
+      </div>
+      <div class="rightbar-section">
+        <div class="rightbar-title">Election Timeline</div>
+        <div class="timeline-mini">
+          <div class="timeline-step"><div class="timeline-dot done"></div><div class="timeline-text">Announcement</div></div>
+          <div class="timeline-step"><div class="timeline-dot active"></div><div class="timeline-text">Nominations</div></div>
+          <div class="timeline-step"><div class="timeline-dot pending"></div><div class="timeline-text">Campaigning</div></div>
+          <div class="timeline-step"><div class="timeline-dot pending"></div><div class="timeline-text">Polling Day</div></div>
+          <div class="timeline-step"><div class="timeline-dot pending"></div><div class="timeline-text">Counting Day</div></div>
+        </div>
+      </div>
+    </aside>
+  </div>
+
+  <!-- Quiz Modal -->
+  <div id="quiz-modal">
+    <div class="quiz-panel glass-card">
+      <div class="quiz-header">
+        <div class="quiz-title">🏆 Election Championship</div>
+        <button class="quiz-close" onclick="window.CivicQuiz.closeQuiz()" aria-label="Close Quiz Modal"><i class="fas fa-times"></i></button>
+      </div>
+      <div id="quiz-body" class="quiz-body">
+        <div class="quiz-progress-bar">
+          <div id="quiz-progress-fill" class="quiz-progress-fill" style="width:0%"></div>
+        </div>
+        <div class="quiz-meta">
+          <div id="quiz-qnum" class="quiz-qnum">Question 1 / 15</div>
+          <div id="quiz-difficulty" class="quiz-difficulty">⭐⭐</div>
+          <div id="quiz-score-live" class="quiz-score-live">Score: 0</div>
+        </div>
+        <div id="quiz-question" class="quiz-question"></div>
+        <div id="quiz-options" class="quiz-options"></div>
+        <div id="quiz-feedback" class="quiz-feedback"></div>
+        <button id="quiz-next-btn" class="quiz-next-btn" onclick="window.CivicQuiz.nextQuestion()">Next Question <i class="fas fa-arrow-right"></i></button>
+      </div>
+      <div id="quiz-result-screen" class="quiz-body" style="display:none;">
+        <div class="quiz-result">
+          <div id="res-emoji" class="result-emoji">🏆</div>
+          <div id="res-title" class="result-title">ELECTION CHAMPION!</div>
+          <div id="res-score" class="result-score">15 / 15</div>
+          <div id="res-msg" class="result-msg">You could work for the Election Commission of India!</div>
+          <div class="result-actions">
+            <button class="btn btn-ghost" onclick="window.CivicQuiz.closeQuiz()">Back to Chat</button>
+            <button class="btn btn-primary" onclick="window.CivicQuiz.openQuiz()">Play Again</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="js/content.js"></script>
+  <script src="js/quiz.js"></script>
+  <script src="js/bot.js"></script>
+  <script type="text/javascript">
+    function googleTranslateElementInit() {
+      new google.translate.TranslateElement({pageLanguage: 'en', includedLanguages: 'hi,bn,te,mr,ta,ur,gu,kn,or,ml,pa,as,en', layout: google.translate.TranslateElement.InlineLayout.SIMPLE}, 'google_translate_element');
+    }
+  </script>
+  <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+  <script>
+    // Initialize Particles background
+    const canvas = document.getElementById('particles-canvas');
+    const ctx = canvas.getContext('2d');
+    let particles = [];
+    
+    function resize() {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+    }
+    window.addEventListener('resize', resize);
+    resize();
+    
+    class Particle {
+      constructor() {
+        this.x = Math.random() * canvas.width;
+        this.y = Math.random() * canvas.height;
+        this.vx = (Math.random() - 0.5) * 0.5;
+        this.vy = (Math.random() - 0.5) * 0.5;
+        this.size = Math.random() * 2;
+      }
+      update() {
+        this.x += this.vx;
+        this.y += this.vy;
+        if(this.x < 0 || this.x > canvas.width) this.vx *= -1;
+        if(this.y < 0 || this.y > canvas.height) this.vy *= -1;
+      }
+      draw() {
+        ctx.beginPath();
+        ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+        ctx.fillStyle = 'rgba(255, 153, 51, 0.4)';
+        ctx.fill();
+      }
+    }
+    
+    for(let i=0; i<50; i++) particles.push(new Particle());
+    
+    function animate() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      particles.forEach(p => { p.update(); p.draw(); });
+      requestAnimationFrame(animate);
+    }
+    animate();
+
+    // Init bot
+    document.addEventListener('DOMContentLoaded', () => {
+      window.initBot();
+    });
+
+    // Confetti simple implementation
+    function triggerConfetti() {
+      console.log("Confetti triggered!");
+    }
+
+    // Theme Toggle
+    function toggleTheme() {
+      document.body.classList.toggle('light-mode');
+      const icon = document.querySelector('.header-actions .fa-moon, .header-actions .fa-sun');
+      if(document.body.classList.contains('light-mode')) {
+        icon.classList.remove('fa-moon');
+        icon.classList.add('fa-sun');
+      } else {
+        icon.classList.remove('fa-sun');
+        icon.classList.add('fa-moon');
+      }
+    }
+
+    // Live Countdown Logic
+    function initCountdown() {
+      // Set to May 2029 for Lok Sabha
+      const targetDate = new Date('May 15, 2029 08:00:00').getTime();
+      
+      setInterval(() => {
+        const now = new Date().getTime();
+        const distance = targetDate - now;
+        
+        if (distance < 0) return;
+        
+        const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+        const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+        const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+        
+        document.getElementById('cd-days').innerText = days.toString().padStart(2, '0');
+        document.getElementById('cd-hours').innerText = hours.toString().padStart(2, '0');
+        document.getElementById('cd-mins').innerText = minutes.toString().padStart(2, '0');
+        document.getElementById('cd-secs').innerText = seconds.toString().padStart(2, '0');
+      }, 1000);
+    }
+    initCountdown();
+  </script>
+</body>
+</html>
