@@ -92,6 +92,8 @@
   line-height: 1.7;
   position: relative;
   animation: bubbleIn 0.3s cubic-bezier(0.34,1.56,0.64,1) both;
+  word-break: break-word;
+  overflow-wrap: break-word;
 }
 @keyframes bubbleIn { from{opacity:0;transform:scale(0.9) translateY(8px)} to{opacity:1;transform:scale(1) translateY(0)} }
 .msg-row.bot .msg-bubble { background:var(--msg-bot-bg); border:1px solid var(--border-subtle); border-top-left-radius:4px; color:var(--text-primary); }
@@ -434,4 +436,30 @@ body.light-mode .time-box { background: rgba(255,255,255,0.5); }
 .share-ink-btn:hover {
   transform: translateY(-2px);
   box-shadow: 0 6px 20px rgba(21,96,189,0.4);
+}
+
+/* Mobile Optimizations */
+@media(max-width:768px) {
+  :root { --header-height: 60px; }
+  .header-subtitle, .header-divider { display: none; }
+  .logo-text { font-size: 18px; }
+  .logo-icon { width: 32px; height: 32px; font-size: 16px; }
+  #header { padding: 0 12px; gap: 8px; }
+  .mode-label { width: 70px; font-size: 10px; padding: 4px 6px; }
+  .icon-btn { width: 32px; height: 32px; font-size: 14px; }
+  #chat-messages { padding: 16px 12px; gap: 16px; }
+  .msg-bubble { padding: 12px 14px; font-size: 14px; max-width: calc(100vw - 70px); }
+  .msg-avatar { width: 30px; height: 30px; font-size: 15px; }
+  #quick-replies { padding: 0 12px 10px; flex-wrap: nowrap; overflow-x: auto; scrollbar-width: none; -ms-overflow-style: none; }
+  #quick-replies::-webkit-scrollbar { display: none; }
+  .chip { font-size: 12px; padding: 6px 12px; flex-shrink: 0; }
+  #input-bar { padding: 8px 12px 12px; gap: 8px; }
+  #user-input { font-size: 16px; padding: 10px 14px; min-height: 44px; }
+  #send-btn { width: 44px; height: 44px; font-size: 16px; }
+  .quiz-panel { width: 100%; height: 100dvh; max-height: 100dvh; border-radius: 0; border: none; }
+  .quiz-header { padding: 16px; }
+  .quiz-body { padding: 16px; }
+  .quiz-option { padding: 12px; font-size: 13.5px; }
+  .quiz-title { font-size: 18px; }
+  #quiz-modal { padding: 0; }
 }

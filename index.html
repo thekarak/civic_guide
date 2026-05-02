@@ -3,7 +3,7 @@
 
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <title>CivicGuide — India Election Education Assistant</title>
   <style>
 @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
@@ -11,8 +11,8 @@
 body.light-mode{--bg-primary:#F8F9FA;--bg-secondary:#FFFFFF;--bg-surface:#FFFFFF;--bg-surface-2:#F3F4F6;--bg-glass:rgba(0,0,0,0.03);--bg-glass-hover:rgba(0,0,0,0.06);--text-primary:#111827;--text-secondary:#4B5563;--text-muted:#6B7280;--border-subtle:rgba(0,0,0,0.1);--border-medium:rgba(0,0,0,0.15);--bg-header:rgba(255,255,255,0.9);--bg-panel:rgba(255,255,255,0.95);--input-bg:rgba(0,0,0,0.04);--msg-bot-bg:rgba(0,0,0,0.04);--shadow-card:0 4px 24px rgba(0,0,0,0.1)}
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 html{font-size:16px;-webkit-font-smoothing:antialiased;scroll-behavior:smooth}
-body{font-family:var(--font-body);background:var(--bg-primary);color:var(--text-primary);height:100vh;overflow:hidden;line-height:1.6}
-#app{display:grid;grid-template-columns:var(--sidebar-width) 1fr var(--rightbar-width);grid-template-rows:var(--header-height) 1fr;height:100vh;overflow:hidden}
+body{font-family:var(--font-body);background:var(--bg-primary);color:var(--text-primary);height:100vh;height:100dvh;overflow:hidden;line-height:1.6}
+#app{display:grid;grid-template-columns:var(--sidebar-width) 1fr var(--rightbar-width);grid-template-rows:var(--header-height) 1fr;height:100vh;height:100dvh;overflow:hidden}
 ::-webkit-scrollbar{width:5px}::-webkit-scrollbar-track{background:transparent}::-webkit-scrollbar-thumb{background:rgba(255,153,51,0.3);border-radius:999px}::-webkit-scrollbar-thumb:hover{background:rgba(255,153,51,0.5)}
 .glass-card{background:var(--bg-glass);border:1px solid var(--border-subtle);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-radius:16px}
 .glow-saffron{box-shadow:var(--shadow-saffron)}
@@ -79,7 +79,7 @@ body{font-family:var(--font-body);background:var(--bg-primary);color:var(--text-
 .msg-avatar{width:36px;height:36px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0}
 .msg-avatar.bot-avatar{background:linear-gradient(135deg,rgba(255,153,51,0.2),rgba(21,96,189,0.2));border:1px solid rgba(255,153,51,0.3)}
 .msg-avatar.user-avatar{background:linear-gradient(135deg,rgba(21,96,189,0.3),rgba(124,58,237,0.3));border:1px solid rgba(21,96,189,0.3)}
-.msg-bubble{max-width:680px;padding:16px 20px;border-radius:18px;font-size:14.5px;line-height:1.7;position:relative;animation:bubbleIn 0.3s cubic-bezier(0.34,1.56,0.64,1) both}
+.msg-bubble{max-width:680px;padding:16px 20px;border-radius:18px;font-size:14.5px;line-height:1.7;position:relative;animation:bubbleIn 0.3s cubic-bezier(0.34,1.56,0.64,1) both;word-break:break-word;overflow-wrap:break-word}
 @keyframes bubbleIn{from{opacity:0;transform:scale(0.9) translateY(8px)}to{opacity:1;transform:scale(1) translateY(0)}}
 .msg-row.bot .msg-bubble{background:var(--msg-bot-bg);border:1px solid var(--border-subtle);border-top-left-radius:4px;color:var(--text-primary)}
 .msg-row.user .msg-bubble{background:var(--user-bubble-grad);border-top-right-radius:4px;color:#fff;box-shadow:0 4px 20px rgba(255,153,51,0.3)}
@@ -187,6 +187,7 @@ body.light-mode .time-box{background:rgba(255,255,255,0.5)}
 .action-chip:hover{background:rgba(255,153,51,0.2)!important}
 .share-ink-btn{display:inline-flex;align-items:center;gap:8px;padding:8px 16px;background:linear-gradient(135deg,var(--chakra-blue),var(--chakra-blue-light));color:white;border-radius:12px;font-weight:600;font-size:13px;border:none;cursor:pointer;box-shadow:0 4px 15px rgba(21,96,189,0.3);transition:all var(--transition-med);margin-top:10px}
 .share-ink-btn:hover{transform:translateY(-2px);box-shadow:0 6px 20px rgba(21,96,189,0.4)}
+@media(max-width:768px){:root{--header-height:60px}.header-subtitle,.header-divider{display:none}.logo-text{font-size:18px}.logo-icon{width:32px;height:32px;font-size:16px}#header{padding:0 12px;gap:8px}.mode-label{width:70px;font-size:10px;padding:4px 6px}.icon-btn{width:32px;height:32px;font-size:14px}#chat-messages{padding:16px 12px;gap:16px}.msg-bubble{padding:12px 14px;font-size:14px;max-width:calc(100vw - 70px)}.msg-avatar{width:30px;height:30px;font-size:15px}#quick-replies{padding:0 12px 10px;flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none;-ms-overflow-style:none}#quick-replies::-webkit-scrollbar{display:none}.chip{font-size:12px;padding:6px 12px;flex-shrink:0}#input-bar{padding:8px 12px 12px;gap:8px}#user-input{font-size:16px;padding:10px 14px;min-height:44px}#send-btn{width:44px;height:44px;font-size:16px}.quiz-panel{width:100%;height:100dvh;max-height:100dvh;border-radius:0;border:none}.quiz-header{padding:16px}.quiz-body{padding:16px}.quiz-option{padding:12px;font-size:13.5px}.quiz-title{font-size:18px}#quiz-modal{padding:0}}
   </style>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
