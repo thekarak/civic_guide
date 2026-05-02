@@ -5,8 +5,189 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>CivicGuide — India Election Education Assistant</title>
-  <link rel="stylesheet" href="/css/main.css">
-  <link rel="stylesheet" href="/css/components.css">
+  <style>
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
+:root{--bg-primary:#08080F;--bg-secondary:#0F0F1A;--bg-surface:#13131F;--bg-surface-2:#1A1A28;--bg-glass:rgba(255,255,255,0.04);--bg-glass-hover:rgba(255,255,255,0.07);--saffron:#FF9933;--saffron-light:#FFB347;--saffron-dark:#E07B00;--saffron-glow:rgba(255,153,51,0.15);--chakra-blue:#1560BD;--chakra-blue-light:#2575D0;--india-green:#138808;--white-india:#F5F5F5;--user-bubble-grad:linear-gradient(135deg,#FF9933,#E07B00);--text-primary:#F0F0F5;--text-secondary:#9CA3AF;--text-muted:#6B7280;--border-subtle:rgba(255,255,255,0.06);--border-medium:rgba(255,255,255,0.12);--border-saffron:rgba(255,153,51,0.3);--bg-header:rgba(8,8,15,0.9);--bg-panel:rgba(13,13,20,0.95);--input-bg:rgba(255,255,255,0.05);--msg-bot-bg:rgba(255,255,255,0.05);--font-display:'Playfair Display',Georgia,serif;--font-body:'Inter',system-ui,sans-serif;--font-mono:'JetBrains Mono',monospace;--sidebar-width:280px;--rightbar-width:260px;--header-height:64px;--transition-fast:150ms ease;--transition-med:250ms ease;--shadow-saffron:0 0 20px rgba(255,153,51,0.2);--shadow-card:0 4px 24px rgba(0,0,0,0.4)}
+body.light-mode{--bg-primary:#F8F9FA;--bg-secondary:#FFFFFF;--bg-surface:#FFFFFF;--bg-surface-2:#F3F4F6;--bg-glass:rgba(0,0,0,0.03);--bg-glass-hover:rgba(0,0,0,0.06);--text-primary:#111827;--text-secondary:#4B5563;--text-muted:#6B7280;--border-subtle:rgba(0,0,0,0.1);--border-medium:rgba(0,0,0,0.15);--bg-header:rgba(255,255,255,0.9);--bg-panel:rgba(255,255,255,0.95);--input-bg:rgba(0,0,0,0.04);--msg-bot-bg:rgba(0,0,0,0.04);--shadow-card:0 4px 24px rgba(0,0,0,0.1)}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{font-size:16px;-webkit-font-smoothing:antialiased;scroll-behavior:smooth}
+body{font-family:var(--font-body);background:var(--bg-primary);color:var(--text-primary);height:100vh;overflow:hidden;line-height:1.6}
+#app{display:grid;grid-template-columns:var(--sidebar-width) 1fr var(--rightbar-width);grid-template-rows:var(--header-height) 1fr;height:100vh;overflow:hidden}
+::-webkit-scrollbar{width:5px}::-webkit-scrollbar-track{background:transparent}::-webkit-scrollbar-thumb{background:rgba(255,153,51,0.3);border-radius:999px}::-webkit-scrollbar-thumb:hover{background:rgba(255,153,51,0.5)}
+.glass-card{background:var(--bg-glass);border:1px solid var(--border-subtle);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-radius:16px}
+.glow-saffron{box-shadow:var(--shadow-saffron)}
+.badge{display:inline-flex;align-items:center;gap:4px;padding:2px 10px;border-radius:999px;font-size:11px;font-weight:600;letter-spacing:0.05em;text-transform:uppercase}
+.badge-saffron{background:rgba(255,153,51,0.15);color:var(--saffron);border:1px solid rgba(255,153,51,0.3)}
+.badge-green{background:rgba(19,136,8,0.15);color:#4ADE80;border:1px solid rgba(19,136,8,0.3)}
+.badge-blue{background:rgba(21,96,189,0.2);color:#60A5FA;border:1px solid rgba(21,96,189,0.4)}
+.divider{height:1px;background:var(--border-subtle);margin:16px 0}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:10px 20px;border:none;border-radius:12px;font-family:var(--font-body);font-size:14px;font-weight:600;cursor:pointer;transition:all var(--transition-med);text-decoration:none;white-space:nowrap}
+.btn-primary{background:linear-gradient(135deg,var(--saffron),var(--saffron-dark));color:#fff;box-shadow:0 4px 15px rgba(255,153,51,0.3)}
+.btn-primary:hover{transform:translateY(-1px);box-shadow:0 8px 25px rgba(255,153,51,0.4)}
+.btn-ghost{background:transparent;color:var(--text-secondary);border:1px solid var(--border-subtle)}
+.btn-ghost:hover{background:var(--bg-glass);color:var(--text-primary);border-color:var(--border-medium)}
+.animated-bg{position:fixed;inset:0;z-index:-1;background:radial-gradient(ellipse at 15% 20%,rgba(255,153,51,0.06) 0%,transparent 50%),radial-gradient(ellipse at 85% 80%,rgba(21,96,189,0.07) 0%,transparent 50%),var(--bg-primary);animation:bgPulse 8s ease-in-out infinite alternate}
+@keyframes bgPulse{0%{opacity:.8}100%{opacity:1}}
+#particles-canvas{position:fixed;inset:0;z-index:0;pointer-events:none;opacity:0.4}
+.tricolor-strip{height:3px;background:linear-gradient(to right,var(--saffron) 0%,var(--saffron) 33.33%,var(--white-india) 33.33%,var(--white-india) 66.66%,var(--india-green) 66.66%,var(--india-green) 100%)}
+#sidebar-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.6);z-index:99}
+@media(max-width:1200px){#app{grid-template-columns:var(--sidebar-width) 1fr}#rightbar{display:none}}
+@media(max-width:768px){:root{--sidebar-width:0px}#app{grid-template-columns:1fr}#sidebar{position:fixed;left:-280px;top:0;bottom:0;width:280px;z-index:100;transition:left var(--transition-med)}#sidebar.open{left:0}#sidebar.open~#sidebar-overlay{display:block}}
+  </style>
+  <style>
+#header{grid-column:1/-1;display:flex;align-items:center;padding:0 20px;background:var(--bg-header);border-bottom:1px solid var(--border-subtle);position:relative;z-index:10;gap:12px;backdrop-filter:blur(20px)}
+.tricolor-strip{position:absolute;bottom:0;left:0;right:0}
+.header-logo{display:flex;align-items:center;gap:10px;flex-shrink:0}
+.logo-icon{width:36px;height:36px;background:linear-gradient(135deg,var(--saffron),var(--saffron-dark));border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:20px;box-shadow:var(--shadow-saffron)}
+.logo-text{font-family:var(--font-display);font-size:20px;font-weight:700;color:var(--text-primary)}
+.logo-text span{color:var(--saffron)}
+.header-subtitle{font-size:12px;color:var(--text-muted)}
+.header-divider{width:1px;height:32px;background:var(--border-subtle);margin:0 8px}
+.header-center{flex:1;display:flex;justify-content:center}
+.header-status{display:flex;align-items:center;gap:6px;font-size:13px;color:var(--text-secondary)}
+.status-dot{width:8px;height:8px;border-radius:50%;background:#4ADE80;animation:statusPulse 2s ease infinite}
+@keyframes statusPulse{0%,100%{box-shadow:0 0 0 0 rgba(74,222,128,0.4)}50%{box-shadow:0 0 0 4px rgba(74,222,128,0)}}
+.header-actions{display:flex;align-items:center;gap:8px}
+.icon-btn{width:36px;height:36px;border-radius:10px;border:1px solid var(--border-subtle);background:var(--bg-glass);color:var(--text-secondary);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:16px;transition:all var(--transition-fast)}
+.icon-btn:hover{background:var(--bg-glass-hover);color:var(--text-primary);border-color:var(--border-medium)}
+.hamburger-btn{display:none}
+@media(max-width:768px){.hamburger-btn{display:flex}.header-center{display:none}}
+#sidebar{background:var(--bg-panel);border-right:1px solid var(--border-subtle);display:flex;flex-direction:column;overflow:hidden;backdrop-filter:blur(20px);z-index:5}
+.sidebar-header{padding:16px;border-bottom:1px solid var(--border-subtle)}
+.sidebar-search{display:flex;align-items:center;gap:8px;background:var(--bg-glass);border:1px solid var(--border-subtle);border-radius:10px;padding:8px 12px}
+.sidebar-search input{flex:1;background:transparent;border:none;outline:none;color:var(--text-primary);font-size:13px;font-family:var(--font-body)}
+.sidebar-search input::placeholder{color:var(--text-muted)}
+.sidebar-nav{flex:1;overflow-y:auto;padding:8px}
+.nav-section{margin-bottom:4px}
+.nav-section-title{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;color:var(--text-muted);padding:8px 12px 4px}
+.nav-item{display:flex;align-items:center;gap:10px;padding:9px 12px;border-radius:10px;cursor:pointer;transition:all var(--transition-fast);color:var(--text-secondary);font-size:13px;border:1px solid transparent}
+.nav-item:hover{background:var(--bg-glass);color:var(--text-primary)}
+.nav-item.active{background:rgba(255,153,51,0.1);color:var(--saffron);border-color:rgba(255,153,51,0.2)}
+.nav-item-icon{font-size:14px;width:20px;text-align:center;flex-shrink:0}
+.nav-item-num{font-size:10px;font-weight:600;color:var(--text-muted);margin-left:auto;font-family:var(--font-mono)}
+.nav-item.active .nav-item-num{color:var(--saffron)}
+.sidebar-footer{padding:12px 16px;border-top:1px solid var(--border-subtle)}
+.voter-helpline{background:rgba(255,153,51,0.08);border:1px solid rgba(255,153,51,0.2);border-radius:12px;padding:12px;text-align:center}
+.voter-helpline-num{font-family:var(--font-display);font-size:22px;font-weight:700;color:var(--saffron)}
+.voter-helpline-label{font-size:11px;color:var(--text-muted);margin-top:2px}
+#chat-container{display:flex;flex-direction:column;overflow:hidden;position:relative;z-index:1}
+#chat-messages{flex:1;overflow-y:auto;padding:24px 32px;display:flex;flex-direction:column;gap:20px;scroll-behavior:smooth}
+@media(max-width:768px){#chat-messages{padding:16px}}
+.msg-row{display:flex;gap:12px;max-width:820px}
+.msg-row.user{flex-direction:row-reverse;margin-left:auto}
+.msg-row.bot{flex-direction:row}
+.msg-avatar{width:36px;height:36px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0}
+.msg-avatar.bot-avatar{background:linear-gradient(135deg,rgba(255,153,51,0.2),rgba(21,96,189,0.2));border:1px solid rgba(255,153,51,0.3)}
+.msg-avatar.user-avatar{background:linear-gradient(135deg,rgba(21,96,189,0.3),rgba(124,58,237,0.3));border:1px solid rgba(21,96,189,0.3)}
+.msg-bubble{max-width:680px;padding:16px 20px;border-radius:18px;font-size:14.5px;line-height:1.7;position:relative;animation:bubbleIn 0.3s cubic-bezier(0.34,1.56,0.64,1) both}
+@keyframes bubbleIn{from{opacity:0;transform:scale(0.9) translateY(8px)}to{opacity:1;transform:scale(1) translateY(0)}}
+.msg-row.bot .msg-bubble{background:var(--msg-bot-bg);border:1px solid var(--border-subtle);border-top-left-radius:4px;color:var(--text-primary)}
+.msg-row.user .msg-bubble{background:var(--user-bubble-grad);border-top-right-radius:4px;color:#fff;box-shadow:0 4px 20px rgba(255,153,51,0.3)}
+.msg-time{font-size:11px;color:var(--text-muted);margin-top:6px;padding:0 4px}
+.msg-row.user .msg-time{text-align:right}
+.msg-bubble h3{font-size:15px;font-weight:700;color:var(--saffron);margin:14px 0 6px;font-family:var(--font-body)}
+.msg-bubble h3:first-child{margin-top:0}
+.msg-bubble p{margin-bottom:8px}.msg-bubble p:last-child{margin-bottom:0}
+.msg-bubble ul,.msg-bubble ol{padding-left:20px;margin:6px 0}
+.msg-bubble li{margin-bottom:4px}
+.msg-bubble strong{color:var(--saffron-light);font-weight:600}
+.msg-bubble em{color:var(--text-secondary);font-style:normal}
+.msg-bubble code{font-family:var(--font-mono);font-size:13px;background:rgba(255,255,255,0.08);padding:1px 6px;border-radius:4px;color:#A5F3FC}
+.msg-bubble .fact-box{background:rgba(255,153,51,0.07);border:1px solid rgba(255,153,51,0.2);border-radius:10px;padding:12px 14px;margin:10px 0}
+.msg-bubble .fact-box-title{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:var(--saffron);margin-bottom:6px}
+.msg-bubble .warn-box{background:rgba(239,68,68,0.08);border:1px solid rgba(239,68,68,0.25);border-radius:10px;padding:12px 14px;margin:10px 0}
+.msg-bubble .step-list{counter-reset:steps;list-style:none;padding:0}
+.msg-bubble .step-list li{counter-increment:steps;display:flex;gap:10px;padding:6px 0;border-bottom:1px solid var(--border-subtle)}
+.msg-bubble .step-list li:last-child{border:none}
+.msg-bubble .step-list li::before{content:counter(steps);min-width:22px;height:22px;background:var(--saffron);color:#000;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;flex-shrink:0;margin-top:1px}
+.typing-indicator{display:flex;align-items:center;gap:5px;padding:14px 18px;background:var(--msg-bot-bg);border:1px solid var(--border-subtle);border-radius:18px;border-top-left-radius:4px;width:fit-content}
+.typing-dot{width:7px;height:7px;border-radius:50%;background:var(--saffron);animation:typingBounce 1.2s ease infinite}
+.typing-dot:nth-child(2){animation-delay:.2s}.typing-dot:nth-child(3){animation-delay:.4s}
+@keyframes typingBounce{0%,60%,100%{transform:translateY(0);opacity:.5}30%{transform:translateY(-6px);opacity:1}}
+#quick-replies{display:flex;flex-wrap:wrap;gap:8px;padding:0 32px 12px}
+.chip{padding:7px 14px;border-radius:999px;border:1px solid var(--border-medium);background:var(--bg-glass);color:var(--text-secondary);font-size:12.5px;cursor:pointer;transition:all var(--transition-fast);font-family:var(--font-body);white-space:nowrap}
+.chip:hover{background:rgba(255,153,51,0.1);border-color:rgba(255,153,51,0.3);color:var(--saffron);transform:translateY(-1px)}
+@media(max-width:768px){#quick-replies{padding:0 16px 10px}}
+#input-bar{padding:12px 24px 16px;background:var(--bg-header);border-top:1px solid var(--border-subtle);display:flex;gap:10px;align-items:flex-end;backdrop-filter:blur(20px)}
+#user-input{flex:1;background:var(--input-bg);border:1px solid var(--border-medium);border-radius:14px;padding:12px 16px;color:var(--text-primary);font-family:var(--font-body);font-size:14px;resize:none;outline:none;max-height:120px;min-height:44px;transition:border-color var(--transition-fast);line-height:1.5}
+#user-input::placeholder{color:var(--text-muted)}
+#user-input:focus{border-color:rgba(255,153,51,0.4);box-shadow:0 0 0 3px rgba(255,153,51,0.08)}
+#send-btn{width:44px;height:44px;border-radius:12px;border:none;background:linear-gradient(135deg,var(--saffron),var(--saffron-dark));color:#fff;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:18px;transition:all var(--transition-med);flex-shrink:0;box-shadow:0 4px 15px rgba(255,153,51,0.3);animation:sendGlow 2s ease-in-out infinite}
+#send-btn:hover{transform:scale(1.08);box-shadow:0 6px 25px rgba(255,153,51,0.5)}
+#send-btn:active{transform:scale(0.95)}
+@keyframes sendGlow{0%,100%{box-shadow:0 4px 15px rgba(255,153,51,0.3)}50%{box-shadow:0 4px 25px rgba(255,153,51,0.5)}}
+@media(max-width:768px){#input-bar{padding:10px 16px 12px}}
+#rightbar{background:var(--bg-panel);border-left:1px solid var(--border-subtle);display:flex;flex-direction:column;overflow:hidden;backdrop-filter:blur(20px)}
+.rightbar-section{padding:16px;border-bottom:1px solid var(--border-subtle)}
+.rightbar-title{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;color:var(--text-muted);margin-bottom:10px}
+.fact-ticker{display:flex;flex-direction:column;gap:10px;max-height:200px;overflow-y:auto}
+.fact-item{background:var(--bg-glass);border:1px solid var(--border-subtle);border-radius:10px;padding:10px 12px;font-size:12.5px;color:var(--text-secondary);line-height:1.5;border-left:3px solid var(--saffron);cursor:pointer;transition:all var(--transition-fast)}
+.fact-item:hover{background:var(--bg-glass-hover);color:var(--text-primary)}
+.timeline-mini{display:flex;flex-direction:column;gap:6px}
+.timeline-step{display:flex;align-items:center;gap:8px;padding:7px 10px;border-radius:8px;background:var(--bg-glass);cursor:pointer;transition:all var(--transition-fast)}
+.timeline-step:hover{background:var(--bg-glass-hover)}
+.timeline-dot{width:10px;height:10px;border-radius:50%;flex-shrink:0}
+.timeline-dot.done{background:#4ADE80}
+.timeline-dot.active{background:var(--saffron);animation:statusPulse 2s infinite}
+.timeline-dot.pending{background:var(--text-muted)}
+.timeline-text{font-size:11.5px;color:var(--text-secondary)}
+#quiz-modal{display:none;position:fixed;inset:0;z-index:1000;align-items:center;justify-content:center;background:rgba(0,0,0,0.7);backdrop-filter:blur(8px);padding:20px}
+#quiz-modal.open{display:flex}
+.quiz-panel{background:var(--bg-surface);border:1px solid var(--border-medium);border-radius:20px;width:100%;max-width:600px;max-height:90vh;overflow-y:auto;box-shadow:0 40px 80px rgba(0,0,0,0.6);animation:modalIn 0.35s cubic-bezier(0.34,1.56,0.64,1)}
+@keyframes modalIn{from{opacity:0;transform:scale(0.85) translateY(30px)}to{opacity:1;transform:scale(1) translateY(0)}}
+.quiz-header{padding:20px 24px;border-bottom:1px solid var(--border-subtle);display:flex;justify-content:space-between;align-items:center}
+.quiz-title{font-family:var(--font-display);font-size:20px;font-weight:700;color:var(--text-primary)}
+.quiz-close{width:32px;height:32px;border-radius:8px;border:none;background:var(--bg-glass);color:var(--text-muted);cursor:pointer;font-size:18px;display:flex;align-items:center;justify-content:center;transition:all var(--transition-fast)}
+.quiz-close:hover{background:rgba(239,68,68,0.2);color:#F87171}
+.quiz-body{padding:24px}
+.quiz-progress-bar{height:4px;background:var(--bg-surface-2);border-radius:999px;margin-bottom:20px;overflow:hidden}
+.quiz-progress-fill{height:100%;background:linear-gradient(to right,var(--saffron),var(--saffron-dark));border-radius:999px;transition:width 0.5s ease}
+.quiz-meta{display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;font-size:13px}
+.quiz-qnum{color:var(--text-muted);font-family:var(--font-mono)}
+.quiz-score-live{color:var(--saffron);font-weight:700}
+.quiz-question{font-size:16px;font-weight:600;color:var(--text-primary);margin-bottom:20px;line-height:1.6}
+.quiz-options{display:flex;flex-direction:column;gap:10px}
+.quiz-option{display:flex;align-items:center;gap:14px;padding:14px 16px;border:1px solid var(--border-medium);border-radius:12px;cursor:pointer;transition:all var(--transition-med);background:var(--bg-glass);font-size:14px;color:var(--text-secondary)}
+.quiz-option:hover{background:rgba(255,153,51,0.06);border-color:rgba(255,153,51,0.3);color:var(--text-primary)}
+.quiz-option.correct{background:rgba(19,136,8,0.12);border-color:#4ADE80;color:#4ADE80}
+.quiz-option.wrong{background:rgba(239,68,68,0.1);border-color:#F87171;color:#F87171}
+.quiz-option.selected{border-color:var(--saffron)}
+.quiz-option.disabled{pointer-events:none}
+.option-letter{width:30px;height:30px;border-radius:8px;background:rgba(255,255,255,0.06);display:flex;align-items:center;justify-content:center;font-weight:700;font-family:var(--font-mono);font-size:13px;flex-shrink:0}
+.quiz-option.correct .option-letter{background:rgba(74,222,128,0.2)}
+.quiz-option.wrong .option-letter{background:rgba(248,113,113,0.2)}
+.quiz-feedback{margin-top:14px;padding:12px 16px;border-radius:10px;font-size:13.5px;line-height:1.6;display:none}
+.quiz-feedback.correct-fb{background:rgba(19,136,8,0.1);border:1px solid rgba(74,222,128,0.3);color:#86EFAC;display:block}
+.quiz-feedback.wrong-fb{background:rgba(239,68,68,0.08);border:1px solid rgba(248,113,113,0.3);color:#FCA5A5;display:block}
+.quiz-next-btn{margin-top:20px;width:100%;padding:12px;background:linear-gradient(135deg,var(--saffron),var(--saffron-dark));border:none;border-radius:12px;color:#fff;font-size:15px;font-weight:700;cursor:pointer;font-family:var(--font-body);display:none;transition:all var(--transition-med)}
+.quiz-next-btn.show{display:block}
+.quiz-next-btn:hover{transform:translateY(-1px);box-shadow:0 8px 25px rgba(255,153,51,0.4)}
+.quiz-result{text-align:center;padding:20px 0}
+.result-emoji{font-size:60px;margin-bottom:12px}
+.result-title{font-family:var(--font-display);font-size:26px;font-weight:700;color:var(--text-primary);margin-bottom:8px}
+.result-score{font-size:48px;font-weight:900;color:var(--saffron);font-family:var(--font-display);margin:12px 0}
+.result-msg{color:var(--text-secondary);font-size:14px;max-width:340px;margin:0 auto;line-height:1.7}
+.result-actions{display:flex;gap:10px;justify-content:center;margin-top:20px}
+#confetti-canvas{position:fixed;inset:0;pointer-events:none;z-index:9999;display:none}
+.mode-toggle{display:flex;position:relative;background:var(--bg-glass);border:1px solid var(--border-medium);border-radius:20px;padding:4px;cursor:pointer;align-items:center;user-select:none}
+.mode-slider{position:absolute;top:4px;left:4px;height:calc(100% - 8px);width:calc(50% - 4px);background:linear-gradient(135deg,var(--saffron),var(--saffron-dark));border-radius:16px;transition:all 0.3s cubic-bezier(0.34,1.56,0.64,1);box-shadow:0 2px 10px rgba(255,153,51,0.3)}
+.mode-toggle.expert-active .mode-slider{transform:translateX(100%);background:linear-gradient(135deg,var(--chakra-blue),var(--chakra-blue-light));box-shadow:0 2px 10px rgba(21,96,189,0.3)}
+.mode-label{position:relative;z-index:1;padding:4px 12px;font-size:12px;font-weight:600;color:var(--text-muted);transition:color 0.3s ease;width:90px;text-align:center}
+.mode-label.active{color:#fff}
+.countdown-card{background:var(--bg-glass);border:1px solid var(--border-medium);border-radius:14px;padding:16px;text-align:center}
+.countdown-title{font-size:11px;font-weight:700;text-transform:uppercase;color:var(--saffron);margin-bottom:12px;letter-spacing:0.05em}
+.countdown-timer{display:flex;justify-content:center;align-items:center;gap:6px}
+.time-box{display:flex;flex-direction:column;background:rgba(0,0,0,0.2);border:1px solid var(--border-subtle);border-radius:8px;width:40px;padding:8px 0;box-shadow:inset 0 2px 4px rgba(0,0,0,0.2)}
+body.light-mode .time-box{background:rgba(255,255,255,0.5)}
+.time-box span{font-family:var(--font-mono);font-size:16px;font-weight:700;color:var(--text-primary);line-height:1}
+.time-box small{font-size:9px;text-transform:uppercase;color:var(--text-muted);margin-top:4px}
+.colon{font-size:16px;font-weight:700;color:var(--text-muted);margin-top:-12px;animation:blink 1s infinite}
+@keyframes blink{50%{opacity:0.2}}
+.action-chip{background:rgba(255,153,51,0.1)!important;border-color:rgba(255,153,51,0.4)!important;color:var(--saffron)!important;font-weight:600}
+.action-chip:hover{background:rgba(255,153,51,0.2)!important}
+.share-ink-btn{display:inline-flex;align-items:center;gap:8px;padding:8px 16px;background:linear-gradient(135deg,var(--chakra-blue),var(--chakra-blue-light));color:white;border-radius:12px;font-weight:600;font-size:13px;border:none;cursor:pointer;box-shadow:0 4px 15px rgba(21,96,189,0.3);transition:all var(--transition-med);margin-top:10px}
+.share-ink-btn:hover{transform:translateY(-2px);box-shadow:0 6px 20px rgba(21,96,189,0.4)}
+  </style>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 
@@ -214,9 +395,41 @@
     </div>
   </div>
 
-  <script src="/js/content.js"></script>
-  <script src="/js/quiz.js"></script>
-  <script src="/js/bot.js"></script>
+  <script>
+// ── content.js ──
+const M={1:{title:"The Constitution & Right to Vote",first_timer_what:"Voting is your superpower! The Indian Constitution gives every adult the right to choose their leaders. It's like having the ultimate remote control for your country.",expert_what:"The right to vote is a Constitutional right (not a fundamental right) guaranteed under Article 326 of Part XV of the Indian Constitution, based on Universal Adult Suffrage.",why:"It ensures every citizen has a voice in choosing their leaders, making democracy truly representative.",how:["Article 324 vests election superintendence in the Election Commission.","Article 325 forbids discrimination in electoral rolls.","Article 326 establishes Adult Suffrage (18+ can vote)."],example:"The voting age was REDUCED from 21 to 18 years by the 61st Amendment Act, 1988, giving crores of youth their voice.",quiz:"Which Constitutional Amendment reduced the voting age from 21 to 18?"},2:{title:"Types of Elections in India",first_timer_what:"There are different elections for different jobs. Lok Sabha is for the Prime Minister (like the school principal), and Vidhan Sabha is for the Chief Minister (like your class teacher).",expert_what:"India's federal structure necessitates multi-tiered elections: General Elections (Lok Sabha) for the Union Government, State Assembly Elections (Vidhan Sabha), and Local Body Elections (Panchayats/Municipalities).",why:"Different levels of government manage different aspects of your life, from national security to your local roads.",how:["Lok Sabha: Elects MPs, winner forms Central Govt.","Vidhan Sabha: Elects MLAs, winner forms State Govt.","Local: Elects Panchayats/Municipalities.","Rajya Sabha: Elected indirectly by MLAs.","Presidential: Elected by MPs and MLAs."],example:"The 2024 General Election (Lok Sabha) was held in 7 phases to ensure security across the vast country.",quiz:"Who conducts the Local Body Elections (Panchayat & Municipal)?"},3:{title:"Voter Eligibility",first_timer_what:"Rules about who gets to vote. If you are an Indian citizen and have celebrated your 18th birthday, you are almost there! You just need your name on the guest list (Electoral Roll).",expert_what:"Eligibility criteria governed by the Representation of the People Act, 1950. Requires Indian citizenship, minimum 18 years of age on the qualifying date, and ordinary residence in the constituency.",why:"To maintain the integrity of the electoral process.",how:["Must be an Indian citizen.","Must be 18+ years old.","Must be on the Electoral Roll."],example:"A person on bail can vote, but a convicted prisoner serving a sentence cannot.",quiz:"Can an NRI (Non-Resident Indian with valid Indian passport) vote?"},4:{title:"How to Register as a Voter",first_timer_what:"Getting your name on the official voter list. It's like registering for a Netflix account, but for democracy! You can do it completely online.",expert_what:"The process of inclusion in the Electoral Roll. Involves submitting Form 6 to the Electoral Registration Officer (ERO), which is verified by Booth Level Officers (BLOs).",why:"You cannot vote if your name is not on the roll, even if you are 18+ and have a Voter ID card.",how:["Online via voters.eci.gov.in (Form 6).","Upload age and address proof.","BLO visits for verification.","Approval and EPIC dispatch."],example:"You can use the Voter Helpline app to register from your smartphone in 10 minutes.",quiz:"Which form is used for New Voter Registration?"},19:{title:"EVM — Electronic Voting Machine",first_timer_what:"A super secure calculator used to record your vote. It has no internet, Wi-Fi, or Bluetooth, making it impossible to hack remotely.",expert_what:"A dual-unit secure voting apparatus (Control Unit & Ballot Unit) using M3 generation One-Time Programmable (OTP) microcontrollers. It is entirely air-gapped and non-networked.",why:"It replaced paper ballots to stop booth capturing, invalid votes, and speed up counting dramatically.",how:["Control Unit (with officer) enables voting.","Ballot Unit (with voter) is used to cast the vote.","VVPAT prints a paper slip for verification."],example:"EVMs run on regular AA batteries, making them perfect for remote areas without electricity.",quiz:"What does EVM stand for?"},23:{title:"Model Code of Conduct",first_timer_what:"The 'rules of the game' for politicians during elections. It stops the ruling party from using government money or power to win votes.",expert_what:"A consensus document of guidelines issued by the ECI under Article 324 to regulate political parties and candidates, ensuring a level playing field. It lacks statutory backing but is heavily enforced.",why:"Ensures a level playing field and prevents the ruling party from misusing official machinery.",how:["Comes into force the moment elections are announced.","Govt cannot announce new welfare schemes.","Ministers cannot use official vehicles for campaigning."],example:"A minister was fined for using a government helicopter to attend a political rally during MCC.",quiz:"Is the Model Code of Conduct a law passed by Parliament?"}};
+window.CivicKnowledge=M;
+  </script>
+  <script>
+// ── quiz.js ──
+const fullQuiz=[{q:"Which Article of the Indian Constitution provides for Adult Suffrage (Universal Franchise)?",options:["Article 14","Article 21","Article 326","Article 352"],answer:2,diff:1,exp:"Article 326 guarantees the right to vote to every Indian citizen above 18."},{q:"What is the minimum age to vote in India?",options:["16 years","18 years","21 years","25 years"],answer:1,diff:1,exp:"The 61st Amendment reduced it from 21 to 18."},{q:"What does EVM stand for?",options:["Electronic Verification Machine","Electronic Voting Machine","Electoral Vote Monitor","Electrical Voting Mechanism"],answer:1,diff:1,exp:"EVMs revolutionized Indian elections by stopping booth capture."},{q:"Which body conducts Lok Sabha elections in India?",options:["Supreme Court of India","Ministry of Home Affairs","Election Commission of India","NITI Aayog"],answer:2,diff:1,exp:"Article 324 gives ECI the power to superintend elections."},{q:"What is the security deposit amount for a General category candidate contesting Lok Sabha elections?",options:["₹10,000","₹15,000","₹25,000","₹50,000"],answer:2,diff:2,exp:"₹25,000 for General and ₹12,500 for SC/ST candidates."},{q:"How many hours before polling must election campaigning stop?",options:["24 hours","36 hours","48 hours","72 hours"],answer:2,diff:2,exp:"This is known as the silence period, allowing voters to reflect peacefully."},{q:"What does NOTA stand for on the EVM?",options:["Not On The Agenda","None Of The Applicants","None Of The Above","No Other Ticket Available"],answer:2,diff:2,exp:"Introduced by SC order to allow voters to reject all candidates."},{q:"In India, who manufactures the indelible ink used during elections?",options:["DRDO, Delhi","Mysore Paints and Varnish Limited (MPVL)","Indian Oil Corporation","Hindustan Unilever"],answer:1,diff:2,exp:"MPVL is a Karnataka Govt PSU, making this ink since 1962."},{q:"Under the new 2023 Election Commission law, who is NOT on the committee that selects the Chief Election Commissioner?",options:["Prime Minister","Leader of Opposition","Chief Justice of India","A Cabinet Minister nominated by PM"],answer:2,diff:2,exp:"Parliament passed a law replacing CJI with a Cabinet Minister."},{q:"A candidate who gets less than _____ of total valid votes forfeits their security deposit.",options:["1/8th","1/6th","1/4th","1/3rd"],answer:1,diff:2,exp:"Getting less than 1/6th valid votes means forfeiture of deposit."},{q:"VVPAT paper slip is visible to the voter for how many seconds?",options:["3 seconds","5 seconds","7 seconds","10 seconds"],answer:2,diff:2,exp:"Visible for exactly 7 seconds before dropping into the sealed box."},{q:"Which Constitutional Amendment reduced the voting age from 21 to 18 years in India?",options:["42nd Amendment","52nd Amendment","61st Amendment","73rd Amendment"],answer:2,diff:3,exp:"Passed in 1988, effective from 1989 elections."},{q:"The Rajya Sabha is elected by which method?",options:["Direct election by citizens","First Past The Post by MPs","Single Transferable Vote by MLAs","Nomination by President"],answer:2,diff:3,exp:"MLAs vote for Rajya Sabha using proportional representation."},{q:"In India's 2024 General Election, approximately how many registered voters were there?",options:["54 crore","72 crore","85 crore","96.8 crore"],answer:3,diff:3,exp:"World's largest electorate, more than population of Europe!"},{q:"What happens if two candidates in an Indian election get EXACTLY equal number of votes?",options:["Re-polling is conducted","The Returning Officer decides by drawing a lot","The senior-aged candidate wins","The case goes to the High Court"],answer:1,diff:3,exp:"Under RPA rules, RO draws a lot (coin flip/chit) to decide."}];
+let quizState={current:0,score:0,active:false};
+function openQuiz(){quizState={current:0,score:0,active:true};document.getElementById("quiz-modal").classList.add("open");renderQuestion();}
+function closeQuiz(){document.getElementById("quiz-modal").classList.remove("open");quizState.active=false;document.getElementById("quiz-result-screen").style.display='none';document.getElementById("quiz-body").style.display='block';}
+function renderQuestion(){const q=fullQuiz[quizState.current];document.getElementById("quiz-qnum").innerText=`Question ${quizState.current+1} / 15`;document.getElementById("quiz-score-live").innerText=`Score: ${quizState.score}`;document.getElementById("quiz-difficulty").innerHTML="⭐".repeat(q.diff);document.getElementById("quiz-progress-fill").style.width=`${((quizState.current)/15)*100}%`;document.getElementById("quiz-question").innerText=q.q;const optionsDiv=document.getElementById("quiz-options");optionsDiv.innerHTML="";const labels=["A","B","C","D"];q.options.forEach((opt,idx)=>{const div=document.createElement("div");div.className="quiz-option";div.innerHTML=`<div class="option-letter">${labels[idx]}</div><div>${opt}</div>`;div.onclick=()=>selectAnswer(idx,div);optionsDiv.appendChild(div);});document.getElementById("quiz-feedback").style.display='none';document.getElementById("quiz-next-btn").classList.remove("show");}
+function selectAnswer(idx,el){const q=fullQuiz[quizState.current];const isCorrect=(idx===q.answer);const options=document.querySelectorAll(".quiz-option");options.forEach((opt,i)=>{opt.classList.add("disabled");if(i===q.answer)opt.classList.add("correct");else if(i===idx&&!isCorrect)opt.classList.add("wrong");});if(isCorrect)quizState.score++;const fb=document.getElementById("quiz-feedback");fb.className=`quiz-feedback ${isCorrect?'correct-fb':'wrong-fb'}`;fb.innerHTML=`<strong>${isCorrect?'✅ CORRECT!':'❌ WRONG!'}</strong><br>${q.exp}`;fb.style.display='block';document.getElementById("quiz-score-live").innerText=`Score: ${quizState.score}`;document.getElementById("quiz-next-btn").classList.add("show");}
+function nextQuestion(){quizState.current++;if(quizState.current<fullQuiz.length){renderQuestion();}else{showResult();}}
+function showResult(){document.getElementById("quiz-body").style.display='none';document.getElementById("quiz-progress-fill").style.width="100%";const resScreen=document.getElementById("quiz-result-screen");resScreen.style.display='block';let title="",msg="",emoji="";if(quizState.score>=13){title="ELECTION CHAMPION!";emoji="🏆";msg="You could work for the Election Commission of India!";triggerConfetti();}else if(quizState.score>=9){title="DEMOCRACY SCHOLAR!";emoji="🥈";msg="Excellent knowledge! Just a few minor things to review.";}else if(quizState.score>=5){title="RISING CITIZEN!";emoji="📈";msg="Good foundation! Want me to explain the topics you missed?";}else{title="BEGINNER'S JOURNEY!";emoji="💪";msg="No worries! Let's start from Module A together. Every expert was once a beginner! 🇮🇳";}document.getElementById("res-emoji").innerText=emoji;document.getElementById("res-title").innerText=title;document.getElementById("res-score").innerText=`${quizState.score} / 15`;document.getElementById("res-msg").innerText=msg;}
+window.CivicQuiz={openQuiz,closeQuiz,nextQuestion};
+  </script>
+  <script>
+// ── bot.js ──
+let chatHistory=[],userState=null,userConstituency=null,awaitingState=true,isExpertMode=false,checklistStep=0,checklistAnswers={};
+const pincodeMap={"700032":{dist:"Jadavpur",state:"West Bengal",mp:"Saayoni Ghosh"},"110001":{dist:"New Delhi",state:"Delhi",mp:"Bansuri Swaraj"},"400001":{dist:"Mumbai South",state:"Maharashtra",mp:"Arvind Sawant"},"560001":{dist:"Bangalore Central",state:"Karnataka",mp:"P. C. Mohan"}};
+const responses={greeting:`**Hello! Namaskar! Nomoshkar!** 🙏\n\nI'm **CivicGuide** — your personal guide to understanding how India's elections work, step by step, in simple language.\n\n🇮🇳 India is the world's LARGEST democracy. But do YOU know exactly how it works?\n\nLet's customize your experience. **What is your Pincode or District name?**`,menu:`**Here's what you can learn today:**\n\n🏛️ **[1]** What is an election & types in India\n🗓️ **[2]** Full Election Timeline (Announcement to Oath)\n🗳️ **[3]** How to Vote — Step by Step Guide\n📋 **[4]** How to Register as a Voter\n⚙️ **[19]** How EVMs and VVPAT Work\n📜 **[23]** Model Code of Conduct — Full Rules\n🏆 **[34]** Test Your Knowledge — Championship Quiz\n\nJust type a **NUMBER** or ask me anything!`,error:`I'm CivicGuide — India's election education specialist! Want to pick a topic from the menu? Type **menu**! 🗳️`};
+window.toggleExpertMode=function(){isExpertMode=!isExpertMode;const toggle=document.getElementById('mode-toggle');const firstTimerLabel=toggle.querySelector('.first-timer');const expertLabel=toggle.querySelector('.expert');if(isExpertMode){toggle.classList.add('expert-active');firstTimerLabel.classList.remove('active');expertLabel.classList.add('active');addBotMessage("Switched to **Expert Mode**. I will now provide detailed, constitutional, and technical facts suitable for advanced learning or exam prep.");}else{toggle.classList.remove('expert-active');firstTimerLabel.classList.add('active');expertLabel.classList.remove('active');addBotMessage("Switched to **First Timer Mode**. I'll keep things simple, practical, and easy to understand with everyday analogies.");}};
+function formatModule(id){const m=window.CivicKnowledge[id];if(!m)return responses.error;let html=`<h3>${m.title}</h3>`;const whatText=isExpertMode?m.expert_what:m.first_timer_what;html+=`<strong>📖 WHAT IT IS:</strong><br>${whatText}<br><br>`;html+=`<strong>🎯 WHY IT MATTERS:</strong><br>${m.why}<br><br>`;html+=`<strong>⚙️ HOW IT WORKS:</strong><ul class="step-list">`;m.how.forEach(step=>{html+=`<li>${step}</li>`;});html+=`</ul><br>`;let exampleText=m.example;if(userConstituency&&id===2){exampleText=`In your constituency of ${userConstituency.dist}, ${userConstituency.state}, ${userConstituency.mp} was elected as your MP in the recent Lok Sabha elections.`;}html+=`<div class="fact-box"><div class="fact-box-title">📰 REAL INDIA EXAMPLE</div>${exampleText}</div>`;html+=`<strong>❓ QUICK QUIZ:</strong><br>${m.quiz}`;return html;}
+function handleChecklistFlow(text){let isYes=text.includes('yes')||text.includes('y')||text==='1';if(checklistStep===1){checklistAnswers.age=isYes;checklistStep=2;addBotMessage(`**Question 2 / 5:**\nDo you have a Voter ID card (EPIC)? (Yes / No)`);}else if(checklistStep===2){checklistAnswers.hasId=isYes;checklistStep=3;addBotMessage(`**Question 3 / 5:**\nIs your name verified on the current Electoral Roll? (Yes / No / Not Sure)`);}else if(checklistStep===3){checklistAnswers.onRoll=isYes&&!text.includes('not');checklistStep=4;addBotMessage(`**Question 4 / 5:**\nDo you know where your specific polling booth is located? (Yes / No)`);}else if(checklistStep===4){checklistAnswers.knowsBooth=isYes;checklistStep=5;addBotMessage(`**Question 5 / 5:**\nDo you know the candidates contesting in your constituency? (Yes / No)`);}else if(checklistStep===5){checklistAnswers.knowsCandidates=isYes;checklistStep=0;let report=`### Your Voting Readiness Report 📊\n\n`;let todos=[];if(!checklistAnswers.age){todos.push("❌ You must be an Indian citizen and 18+ to vote. If you're turning 18 soon, you can apply in advance!");}else if(!checklistAnswers.onRoll){todos.push("❌ **Critical:** You must register your name on the Electoral Roll (Form 6). You cannot vote without this, even if you have an ID!");}else{if(!checklistAnswers.hasId){todos.push("⚠️ You don't have a physical Voter ID, but since your name is on the roll, you can use Aadhaar, PAN, or Passport.");}if(!checklistAnswers.knowsBooth){todos.push("🔍 Find your polling booth using the Voter Helpline App or voters.eci.gov.in.");}if(!checklistAnswers.knowsCandidates){todos.push("📱 Check the 'Know Your Candidate' (KYC) App by ECI to see details and criminal antecedents of your candidates.");}if(todos.length===0){report+="🌟 **YOU ARE 100% READY TO VOTE!** 🌟\n\nYou have everything sorted. See you at the booth!";}}if(todos.length>0){report+="**Your Action Plan:**\n"+todos.map(t=>`- ${t}`).join('\n');}report+=`\n\n<button class="share-ink-btn" onclick="alert('Shared to your social media! #CivicGuide #IndiaVotes')">Share Your Ink 🗳️</button>`;addBotMessage(report);}}
+function processInput(text){text=text.trim().toLowerCase();if(!text)return;addUserMessage(text);document.getElementById("user-input").value="";showTyping();setTimeout(()=>{hideTyping();let reply="";if(checklistStep>0){handleChecklistFlow(text);return;}if(awaitingState){awaitingState=false;let matched=null;if(/^\d{6}$/.test(text)&&pincodeMap[text]){matched=pincodeMap[text];}if(matched){userConstituency=matched;reply=`Awesome! I see you are from **${matched.dist}, ${matched.state}**.\nFun fact: Your current MP is ${matched.mp}! 🏛️\n\n`+responses.menu;}else{reply=`Awesome! Nice to meet someone from **${text.toUpperCase()}**! 😊\n\n`+responses.menu;}}else if(text.includes("am i ready to vote")||text.includes("ready to vote")||text.includes("checklist")){checklistStep=1;checklistAnswers={};reply=`**"Am I Ready to Vote?" Personal Checklist** 📋\n\nLet's find out exactly what you need to do before election day.\n\n**Question 1 / 5:**\nAre you an Indian citizen aged 18 or older? (Yes / No)`;}else if(text.includes("lost")&&text.includes("id")){reply=`**What if I lost my Voter ID?**\n\nDon't panic! You can still vote. As long as your name is on the Electoral Roll, you can use any of the 11 alternative photo IDs approved by the ECI, such as:\n- Aadhaar Card\n- PAN Card\n- Driving License\n- Indian Passport\n\n*Pro tip: Always check your name on the roll online before going to the booth.*`;}else if(text.includes("not on roll")||text.includes("isn't on the roll")||text.includes("not in list")){reply=`**What if my name isn't on the roll?**\n\nYou CANNOT vote. Even if you have a physical Voter ID card, if your name is not on the voter list for your booth, you cannot cast a vote. You must apply for registration (Form 6) before the next election cycle.`;}else if(text.includes("travelling")||text.includes("out of town")||text.includes("traveling")){reply=`**What if I am travelling on polling day?**\n\nUnfortunately, standard voters must vote in person at their designated booth. Postal ballots are only available for specific categories: Service voters (armed forces), election duty staff, media persons, and citizens above 85 years of age or with disabilities.`;}else if(text==="menu"||text==="help"||text==="start"){reply=responses.menu;}else if(text==="34"||text==="[34]"||text.includes("quiz")){reply=`Let's test your knowledge! Opening the Championship Quiz now... 🏆`;setTimeout(()=>window.CivicQuiz.openQuiz(),1500);}else if(!isNaN(parseInt(text.replace(/[\[\]]/g,'')))){let num=parseInt(text.replace(/[\[\]]/g,''));if(window.CivicKnowledge[num]){reply=formatModule(num);}else{reply=`I don't have module [${num}] loaded right now. Try 1, 2, 3, 4, 19, or 23!`;}}else if(text.includes("story")){reply=`**Arjun's First Vote** 📖\n\nArjun, an 18-year-old from Bhopal, was excited. He applied online using Form 6. When the day came, he walked to the booth, showed his EPIC card. The officer put indelible ink on his left index finger. He walked to the EVM, pressed the blue button next to his choice, heard the loud BEEP, and saw the VVPAT slip for 7 seconds. He walked out, chest swelled with pride, and took a selfie showing his inked finger!`;}else{reply=responses.error;}addBotMessage(reply);},800);}
+function parseMarkdown(text){let html=text.replace(/\*\*(.*?)\*\*/g,'<strong>$1</strong>');html=html.replace(/\*(.*?)\*/g,'<em>$1</em>');html=html.replace(/\n\n/g,'<br><br>');html=html.replace(/\n/g,'<br>');return html;}
+function addUserMessage(text){const div=document.createElement('div');div.className='msg-row user';div.innerHTML=`<div class="msg-bubble">${text}</div><div class="msg-avatar user-avatar">👤</div>`;document.getElementById("chat-messages").appendChild(div);scrollToBottom();}
+function addBotMessage(text){const div=document.createElement('div');div.className='msg-row bot';let formatted=text.includes("📖 WHAT IT IS")||text.includes("<button")?text:parseMarkdown(text);div.innerHTML=`<div class="msg-avatar bot-avatar">🗳️</div><div class="msg-bubble">${formatted}</div>`;document.getElementById("chat-messages").appendChild(div);scrollToBottom();}
+function showTyping(){const div=document.createElement('div');div.className='msg-row bot';div.id='typing-row';div.innerHTML=`<div class="msg-avatar bot-avatar">🗳️</div><div class="typing-indicator"><div class="typing-dot"></div><div class="typing-dot"></div><div class="typing-dot"></div></div>`;document.getElementById("chat-messages").appendChild(div);scrollToBottom();}
+function hideTyping(){const tr=document.getElementById('typing-row');if(tr)tr.remove();}
+function scrollToBottom(){const cm=document.getElementById("chat-messages");cm.scrollTop=cm.scrollHeight;}
+function initBot(){setTimeout(()=>{addBotMessage(responses.greeting);},500);document.getElementById("send-btn").onclick=()=>{processInput(document.getElementById("user-input").value);};document.getElementById("user-input").addEventListener("keypress",(e)=>{if(e.key==="Enter"&&!e.shiftKey){e.preventDefault();processInput(document.getElementById("user-input").value);}});document.querySelectorAll(".chip").forEach(chip=>{chip.onclick=()=>{let val=chip.innerText.replace(/[\u{1F300}-\u{1F64F}\u{1F680}-\u{1F6FF}\u{2600}-\u{26FF}\u{2700}-\u{27BF}\u{1F900}-\u{1F9FF}\u{1F1E6}-\u{1F1FF}]/gu,'').trim();processInput(val);};});}
+window.initBot=initBot;
+  </script>
   <script type="text/javascript">
     function googleTranslateElementInit() {
       new google.translate.TranslateElement({ pageLanguage: 'en', includedLanguages: 'hi,bn,te,mr,ta,ur,gu,kn,or,ml,pa,as,en', layout: google.translate.TranslateElement.InlineLayout.SIMPLE }, 'google_translate_element');
