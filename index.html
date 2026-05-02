@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,6 +9,7 @@
   <link rel="stylesheet" href="/css/components.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
+
 <body>
   <div class="animated-bg"></div>
   <canvas id="particles-canvas"></canvas>
@@ -34,8 +36,10 @@
           <span class="mode-label first-timer active">First Timer</span>
           <span class="mode-label expert">Expert</span>
         </div>
-        <button class="icon-btn" title="Toggle Theme" onclick="toggleTheme()" aria-label="Toggle Light/Dark Mode"><i class="fas fa-moon"></i></button>
-        <button class="icon-btn hamburger-btn" onclick="document.getElementById('sidebar').classList.add('open')" aria-label="Open Sidebar Menu"><i class="fas fa-bars"></i></button>
+        <button class="icon-btn" title="Toggle Theme" onclick="toggleTheme()" aria-label="Toggle Light/Dark Mode"><i
+            class="fas fa-moon"></i></button>
+        <button class="icon-btn hamburger-btn" onclick="document.getElementById('sidebar').classList.add('open')"
+          aria-label="Open Sidebar Menu"><i class="fas fa-bars"></i></button>
       </div>
       <div class="tricolor-strip"></div>
     </header>
@@ -51,22 +55,43 @@
       <nav class="sidebar-nav">
         <div class="nav-section">
           <div class="nav-section-title">A. Foundations</div>
-          <div class="nav-item active" onclick="processInput('1')"><div class="nav-item-icon">🏛️</div><span>Constitution & Voting Right</span><div class="nav-item-num">[1]</div></div>
-          <div class="nav-item" onclick="processInput('2')"><div class="nav-item-icon">🗳️</div><span>Types of Elections</span><div class="nav-item-num">[2]</div></div>
-          <div class="nav-item" onclick="processInput('3')"><div class="nav-item-icon">👤</div><span>Voter Eligibility</span><div class="nav-item-num">[3]</div></div>
-          <div class="nav-item" onclick="processInput('4')"><div class="nav-item-icon">📋</div><span>How to Register</span><div class="nav-item-num">[4]</div></div>
+          <div class="nav-item active" onclick="processInput('1')">
+            <div class="nav-item-icon">🏛️</div><span>Constitution & Voting Right</span>
+            <div class="nav-item-num">[1]</div>
+          </div>
+          <div class="nav-item" onclick="processInput('2')">
+            <div class="nav-item-icon">🗳️</div><span>Types of Elections</span>
+            <div class="nav-item-num">[2]</div>
+          </div>
+          <div class="nav-item" onclick="processInput('3')">
+            <div class="nav-item-icon">👤</div><span>Voter Eligibility</span>
+            <div class="nav-item-num">[3]</div>
+          </div>
+          <div class="nav-item" onclick="processInput('4')">
+            <div class="nav-item-icon">📋</div><span>How to Register</span>
+            <div class="nav-item-num">[4]</div>
+          </div>
         </div>
         <div class="nav-section">
           <div class="nav-section-title">D. Technology</div>
-          <div class="nav-item" onclick="processInput('19')"><div class="nav-item-icon">🖥️</div><span>EVM Detail</span><div class="nav-item-num">[19]</div></div>
+          <div class="nav-item" onclick="processInput('19')">
+            <div class="nav-item-icon">🖥️</div><span>EVM Detail</span>
+            <div class="nav-item-num">[19]</div>
+          </div>
         </div>
         <div class="nav-section">
           <div class="nav-section-title">E. Laws & Rules</div>
-          <div class="nav-item" onclick="processInput('23')"><div class="nav-item-icon">📜</div><span>Model Code of Conduct</span><div class="nav-item-num">[23]</div></div>
+          <div class="nav-item" onclick="processInput('23')">
+            <div class="nav-item-icon">📜</div><span>Model Code of Conduct</span>
+            <div class="nav-item-num">[23]</div>
+          </div>
         </div>
         <div class="nav-section">
           <div class="nav-section-title">G. Quiz Mode</div>
-          <div class="nav-item" onclick="processInput('34')"><div class="nav-item-icon">🏆</div><span>Championship Quiz</span><div class="nav-item-num">[34]</div></div>
+          <div class="nav-item" onclick="processInput('34')">
+            <div class="nav-item-icon">🏆</div><span>Championship Quiz</span>
+            <div class="nav-item-num">[34]</div>
+          </div>
         </div>
       </nav>
       <div class="sidebar-footer">
@@ -90,7 +115,8 @@
         <div class="chip">Start Quiz 🏆</div>
       </div>
       <div id="input-bar">
-        <textarea id="user-input" placeholder="Type a number [1-36] or ask a question..." rows="1" aria-label="Chat input field"></textarea>
+        <textarea id="user-input" placeholder="Type a number [1-36] or ask a question..." rows="1"
+          aria-label="Chat input field"></textarea>
         <button id="send-btn" aria-label="Send message"><i class="fas fa-paper-plane"></i></button>
       </div>
     </main>
@@ -100,8 +126,10 @@
       <div class="rightbar-section">
         <div class="rightbar-title">Did You Know?</div>
         <div class="fact-ticker">
-          <div class="fact-item" onclick="processInput('Tell me a fact about the electorate')" role="button" tabindex="0">India has the world's largest electorate — 96.8 crore registered voters!</div>
-          <div class="fact-item" onclick="processInput('When were EVMs first used?')" role="button" tabindex="0">In 1982, EVMs were used for the first time in Parur constituency, Kerala.</div>
+          <div class="fact-item" onclick="processInput('Tell me a fact about the electorate')" role="button"
+            tabindex="0">India has the world's largest electorate — 96.8 crore registered voters!</div>
+          <div class="fact-item" onclick="processInput('When were EVMs first used?')" role="button" tabindex="0">In
+            1982, EVMs were used for the first time in Parur constituency, Kerala.</div>
         </div>
       </div>
       <div class="rightbar-section">
@@ -123,11 +151,26 @@
       <div class="rightbar-section">
         <div class="rightbar-title">Election Timeline</div>
         <div class="timeline-mini">
-          <div class="timeline-step"><div class="timeline-dot done"></div><div class="timeline-text">Announcement</div></div>
-          <div class="timeline-step"><div class="timeline-dot active"></div><div class="timeline-text">Nominations</div></div>
-          <div class="timeline-step"><div class="timeline-dot pending"></div><div class="timeline-text">Campaigning</div></div>
-          <div class="timeline-step"><div class="timeline-dot pending"></div><div class="timeline-text">Polling Day</div></div>
-          <div class="timeline-step"><div class="timeline-dot pending"></div><div class="timeline-text">Counting Day</div></div>
+          <div class="timeline-step">
+            <div class="timeline-dot done"></div>
+            <div class="timeline-text">Announcement</div>
+          </div>
+          <div class="timeline-step">
+            <div class="timeline-dot active"></div>
+            <div class="timeline-text">Nominations</div>
+          </div>
+          <div class="timeline-step">
+            <div class="timeline-dot pending"></div>
+            <div class="timeline-text">Campaigning</div>
+          </div>
+          <div class="timeline-step">
+            <div class="timeline-dot pending"></div>
+            <div class="timeline-text">Polling Day</div>
+          </div>
+          <div class="timeline-step">
+            <div class="timeline-dot pending"></div>
+            <div class="timeline-text">Counting Day</div>
+          </div>
         </div>
       </div>
     </aside>
@@ -138,7 +181,8 @@
     <div class="quiz-panel glass-card">
       <div class="quiz-header">
         <div class="quiz-title">🏆 Election Championship</div>
-        <button class="quiz-close" onclick="window.CivicQuiz.closeQuiz()" aria-label="Close Quiz Modal"><i class="fas fa-times"></i></button>
+        <button class="quiz-close" onclick="window.CivicQuiz.closeQuiz()" aria-label="Close Quiz Modal"><i
+            class="fas fa-times"></i></button>
       </div>
       <div id="quiz-body" class="quiz-body">
         <div class="quiz-progress-bar">
@@ -152,7 +196,8 @@
         <div id="quiz-question" class="quiz-question"></div>
         <div id="quiz-options" class="quiz-options"></div>
         <div id="quiz-feedback" class="quiz-feedback"></div>
-        <button id="quiz-next-btn" class="quiz-next-btn" onclick="window.CivicQuiz.nextQuestion()">Next Question <i class="fas fa-arrow-right"></i></button>
+        <button id="quiz-next-btn" class="quiz-next-btn" onclick="window.CivicQuiz.nextQuestion()">Next Question <i
+            class="fas fa-arrow-right"></i></button>
       </div>
       <div id="quiz-result-screen" class="quiz-body" style="display:none;">
         <div class="quiz-result">
@@ -174,23 +219,24 @@
   <script src="/js/bot.js"></script>
   <script type="text/javascript">
     function googleTranslateElementInit() {
-      new google.translate.TranslateElement({pageLanguage: 'en', includedLanguages: 'hi,bn,te,mr,ta,ur,gu,kn,or,ml,pa,as,en', layout: google.translate.TranslateElement.InlineLayout.SIMPLE}, 'google_translate_element');
+      new google.translate.TranslateElement({ pageLanguage: 'en', includedLanguages: 'hi,bn,te,mr,ta,ur,gu,kn,or,ml,pa,as,en', layout: google.translate.TranslateElement.InlineLayout.SIMPLE }, 'google_translate_element');
     }
   </script>
-  <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+  <script type="text/javascript"
+    src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
   <script>
     // Initialize Particles background
     const canvas = document.getElementById('particles-canvas');
     const ctx = canvas.getContext('2d');
     let particles = [];
-    
+
     function resize() {
       canvas.width = window.innerWidth;
       canvas.height = window.innerHeight;
     }
     window.addEventListener('resize', resize);
     resize();
-    
+
     class Particle {
       constructor() {
         this.x = Math.random() * canvas.width;
@@ -202,8 +248,8 @@
       update() {
         this.x += this.vx;
         this.y += this.vy;
-        if(this.x < 0 || this.x > canvas.width) this.vx *= -1;
-        if(this.y < 0 || this.y > canvas.height) this.vy *= -1;
+        if (this.x < 0 || this.x > canvas.width) this.vx *= -1;
+        if (this.y < 0 || this.y > canvas.height) this.vy *= -1;
       }
       draw() {
         ctx.beginPath();
@@ -212,9 +258,9 @@
         ctx.fill();
       }
     }
-    
-    for(let i=0; i<50; i++) particles.push(new Particle());
-    
+
+    for (let i = 0; i < 50; i++) particles.push(new Particle());
+
     function animate() {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
       particles.forEach(p => { p.update(); p.draw(); });
@@ -236,7 +282,7 @@
     function toggleTheme() {
       document.body.classList.toggle('light-mode');
       const icon = document.querySelector('.header-actions .fa-moon, .header-actions .fa-sun');
-      if(document.body.classList.contains('light-mode')) {
+      if (document.body.classList.contains('light-mode')) {
         icon.classList.remove('fa-moon');
         icon.classList.add('fa-sun');
       } else {
@@ -249,18 +295,18 @@
     function initCountdown() {
       // Set to May 2029 for Lok Sabha
       const targetDate = new Date('May 15, 2029 08:00:00').getTime();
-      
+
       setInterval(() => {
         const now = new Date().getTime();
         const distance = targetDate - now;
-        
+
         if (distance < 0) return;
-        
+
         const days = Math.floor(distance / (1000 * 60 * 60 * 24));
         const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
         const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
         const seconds = Math.floor((distance % (1000 * 60)) / 1000);
-        
+
         document.getElementById('cd-days').innerText = days.toString().padStart(2, '0');
         document.getElementById('cd-hours').innerText = hours.toString().padStart(2, '0');
         document.getElementById('cd-mins').innerText = minutes.toString().padStart(2, '0');
@@ -270,4 +316,5 @@
     initCountdown();
   </script>
 </body>
+
 </html>
