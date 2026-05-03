@@ -140,7 +140,43 @@ function processInput(text) {
       return;
     }
     
-    if (awaitingState) {
+    // Explicit commands & FAQs should bypass the location prompt
+    if (text.includes("am i ready to vote") || text.includes("ready to vote") || text.includes("checklist")) {
+      awaitingState = false;
+      checklistStep = 1;
+      checklistAnswers = {};
+      reply = `**"Am I Ready to Vote?" Personal Checklist** 📋\n\nLet's find out exactly what you need to do before election day.\n\n**Question 1 / 5:**\nAre you an Indian citizen aged 18 or older? (Yes / No)`;
+    } else if (text.includes("evm")) {
+      awaitingState = false;
+      reply = formatModule(19);
+    } else if (text.includes("lost") && text.includes("id")) {
+      awaitingState = false;
+      reply = `**What if I lost my Voter ID?**\n\nDon't panic! You can still vote. As long as your name is on the Electoral Roll, you can use any of the 11 alternative photo IDs approved by the ECI, such as:\n- Aadhaar Card\n- PAN Card\n- Driving License\n- Indian Passport\n\n*Pro tip: Always check your name on the roll online before going to the booth.*`;
+    } else if (text.includes("not on roll") || text.includes("isn't on the roll") || text.includes("not in list")) {
+      awaitingState = false;
+      reply = `**What if my name isn't on the roll?**\n\nYou CANNOT vote. Even if you have a physical Voter ID card, if your name is not on the voter list for your booth, you cannot cast a vote. You must apply for registration (Form 6) before the next election cycle.`;
+    } else if (text.includes("travelling") || text.includes("out of town") || text.includes("traveling")) {
+      awaitingState = false;
+      reply = `**What if I am travelling on polling day?**\n\nUnfortunately, standard voters must vote in person at their designated booth. Postal ballots are only available for specific categories: Service voters (armed forces), election duty staff, media persons, and citizens above 85 years of age or with disabilities.`;
+    } else if (text === "menu" || text === "help" || text === "start") {
+      awaitingState = false;
+      reply = responses.menu;
+    } else if (text === "34" || text === "[34]" || text.includes("quiz")) {
+      awaitingState = false;
+      reply = `Let's test your knowledge! Opening the Championship Quiz now... 🏆`;
+      setTimeout(() => window.CivicQuiz.openQuiz(), 1500);
+    } else if (!isNaN(parseInt(text.replace(/[\[\]]/g, '')))) {
+      awaitingState = false;
+      let num = parseInt(text.replace(/[\[\]]/g, ''));
+      if (window.CivicKnowledge[num]) {
+        reply = formatModule(num);
+      } else {
+        reply = `I don't have module [${num}] loaded right now. Try 1, 2, 3, 4, 19, or 23!`;
+      }
+    } else if (text.includes("story")) {
+      awaitingState = false;
+      reply = `**Arjun's First Vote** 📖\n\nArjun, an 18-year-old from Bhopal, was excited. He applied online using Form 6. When the day came, he walked to the booth, showed his EPIC card. The officer put indelible ink on his left index finger. He walked to the EVM, pressed the blue button next to his choice, heard the loud BEEP, and saw the VVPAT slip for 7 seconds. He walked out, chest swelled with pride, and took a selfie showing his inked finger!`;
+    } else if (awaitingState) {
       awaitingState = false;
       let matched = null;
       if (/^\d{6}$/.test(text) && pincodeMap[text]) {
@@ -153,30 +189,6 @@ function processInput(text) {
       } else {
         reply = `Awesome! Nice to meet someone from **${text.toUpperCase()}**! 😊\n\n` + responses.menu;
       }
-    } else if (text.includes("am i ready to vote") || text.includes("ready to vote") || text.includes("checklist")) {
-      checklistStep = 1;
-      checklistAnswers = {};
-      reply = `**"Am I Ready to Vote?" Personal Checklist** 📋\n\nLet's find out exactly what you need to do before election day.\n\n**Question 1 / 5:**\nAre you an Indian citizen aged 18 or older? (Yes / No)`;
-    } else if (text.includes("lost") && text.includes("id")) {
-      reply = `**What if I lost my Voter ID?**\n\nDon't panic! You can still vote. As long as your name is on the Electoral Roll, you can use any of the 11 alternative photo IDs approved by the ECI, such as:\n- Aadhaar Card\n- PAN Card\n- Driving License\n- Indian Passport\n\n*Pro tip: Always check your name on the roll online before going to the booth.*`;
-    } else if (text.includes("not on roll") || text.includes("isn't on the roll") || text.includes("not in list")) {
-      reply = `**What if my name isn't on the roll?**\n\nYou CANNOT vote. Even if you have a physical Voter ID card, if your name is not on the voter list for your booth, you cannot cast a vote. You must apply for registration (Form 6) before the next election cycle.`;
-    } else if (text.includes("travelling") || text.includes("out of town") || text.includes("traveling")) {
-      reply = `**What if I am travelling on polling day?**\n\nUnfortunately, standard voters must vote in person at their designated booth. Postal ballots are only available for specific categories: Service voters (armed forces), election duty staff, media persons, and citizens above 85 years of age or with disabilities.`;
-    } else if (text === "menu" || text === "help" || text === "start") {
-      reply = responses.menu;
-    } else if (text === "34" || text === "[34]" || text.includes("quiz")) {
-      reply = `Let's test your knowledge! Opening the Championship Quiz now... 🏆`;
-      setTimeout(() => window.CivicQuiz.openQuiz(), 1500);
-    } else if (!isNaN(parseInt(text.replace(/[\[\]]/g, '')))) {
-      let num = parseInt(text.replace(/[\[\]]/g, ''));
-      if (window.CivicKnowledge[num]) {
-        reply = formatModule(num);
-      } else {
-        reply = `I don't have module [${num}] loaded right now. Try 1, 2, 3, 4, 19, or 23!`;
-      }
-    } else if (text.includes("story")) {
-      reply = `**Arjun's First Vote** 📖\n\nArjun, an 18-year-old from Bhopal, was excited. He applied online using Form 6. When the day came, he walked to the booth, showed his EPIC card. The officer put indelible ink on his left index finger. He walked to the EVM, pressed the blue button next to his choice, heard the loud BEEP, and saw the VVPAT slip for 7 seconds. He walked out, chest swelled with pride, and took a selfie showing his inked finger!`;
     } else {
       reply = responses.error;
     }
