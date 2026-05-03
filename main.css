@@ -32,7 +32,7 @@
   --font-body: 'Inter',system-ui,sans-serif;
   --font-mono: 'JetBrains Mono',monospace;
   --sidebar-width: 280px;
-  --rightbar-width: 260px;
+  --rightbar-width: 280px;
   --header-height: 64px;
   --transition-fast: 150ms ease;
   --transition-med: 250ms ease;
@@ -91,7 +91,8 @@ body { font-family:var(--font-body); background:var(--bg-primary); color:var(--t
 
 .tricolor-strip { height:3px; background:linear-gradient(to right,var(--saffron) 0%,var(--saffron) 33.33%,var(--white-india) 33.33%,var(--white-india) 66.66%,var(--india-green) 66.66%,var(--india-green) 100%); }
 
-#sidebar-overlay { display:none; position:fixed; inset:0; background:rgba(0,0,0,0.6); z-index:99; }
+#sidebar-overlay { display:none; position:fixed; inset:0; background:rgba(0,0,0,0.2); backdrop-filter:blur(4px); z-index:99; transition:all var(--transition-med); }
 
-@media(max-width:1200px){#app{grid-template-columns:var(--sidebar-width) 1fr}#rightbar{display:none}}
+@media(max-width:1200px){#app{grid-template-columns:var(--sidebar-width) 1fr var(--rightbar-width)}}
+@media(max-width:992px){#app{grid-template-columns:var(--sidebar-width) 1fr}#rightbar{display:none}}
 @media(max-width:768px){:root{--sidebar-width:0px}#app{grid-template-columns:1fr}#sidebar{position:fixed;left:-280px;top:0;bottom:0;width:280px;z-index:100;transition:left var(--transition-med)}#sidebar.open{left:0}#sidebar.open~#sidebar-overlay{display:block}}
