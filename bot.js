@@ -196,10 +196,15 @@ function parseMarkdown(text) {
 function addUserMessage(text) {
   const div = document.createElement('div');
   div.className = 'msg-row user';
-  div.innerHTML = `
-    <div class="msg-bubble">${text}</div>
-    <div class="msg-avatar user-avatar">👤</div>
-  `;
+  // Use textContent for user input to prevent XSS
+  const bubble = document.createElement('div');
+  bubble.className = 'msg-bubble';
+  bubble.textContent = text;
+  const avatar = document.createElement('div');
+  avatar.className = 'msg-avatar user-avatar';
+  avatar.textContent = '\u{1F464}';
+  div.appendChild(bubble);
+  div.appendChild(avatar);
   document.getElementById("chat-messages").appendChild(div);
   scrollToBottom();
 }
@@ -262,6 +267,15 @@ function initBot() {
       let val = chip.innerText.replace(/[\u{1F300}-\u{1F64F}\u{1F680}-\u{1F6FF}\u{2600}-\u{26FF}\u{2700}-\u{27BF}\u{1F900}-\u{1F9FF}\u{1F1E6}-\u{1F1FF}]/gu, '').trim();
       processInput(val);
     };
+  });
+  // Add keyboard support for tabindex elements (chips and nav items)
+  document.querySelectorAll(".chip, .nav-item").forEach(el => {
+    el.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        el.click();
+      }
+    });
   });
 }
 
